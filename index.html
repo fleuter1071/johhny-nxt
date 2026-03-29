@@ -16,9 +16,14 @@
       --gold-2: #ffea96;
       --blue: #46b5ff;
       --red: #ff5d5d;
+      --violet: #9e7bff;
+      --emerald: #6df3b2;
+      --orange: #ff9d66;
       --shadow: 0 20px 50px rgba(0,0,0,.35);
       --radius: 24px;
       --max: 1200px;
+      --fan-accent: var(--gold);
+      --fan-accent-soft: rgba(246,211,78,.16);
     }
 
     * { box-sizing: border-box; }
@@ -32,6 +37,31 @@
         linear-gradient(180deg, #050507 0%, #09090b 20%, #0c0d12 100%);
       color: var(--text);
       overflow-x: hidden;
+    }
+
+    body[data-fan-type="believer"] {
+      --fan-accent: var(--gold);
+      --fan-accent-soft: rgba(246,211,78,.18);
+    }
+
+    body[data-fan-type="historian"] {
+      --fan-accent: var(--blue);
+      --fan-accent-soft: rgba(70,181,255,.18);
+    }
+
+    body[data-fan-type="comeback"] {
+      --fan-accent: var(--orange);
+      --fan-accent-soft: rgba(255,157,102,.18);
+    }
+
+    body[data-fan-type="prophet"] {
+      --fan-accent: var(--emerald);
+      --fan-accent-soft: rgba(109,243,178,.18);
+    }
+
+    body[data-fan-type="loyalist"] {
+      --fan-accent: var(--violet);
+      --fan-accent-soft: rgba(158,123,255,.18);
     }
 
     body::before {
@@ -83,8 +113,8 @@
       width: 14px;
       height: 14px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold), var(--blue));
-      box-shadow: 0 0 18px rgba(246,211,78,.7);
+      background: linear-gradient(135deg, var(--fan-accent), var(--blue));
+      box-shadow: 0 0 18px var(--fan-accent-soft);
     }
 
     .nav {
@@ -120,7 +150,7 @@
       width: 260px;
       height: 260px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(246,211,78,.18), transparent 70%);
+      background: radial-gradient(circle, var(--fan-accent-soft), transparent 70%);
       filter: blur(20px);
       pointer-events: none;
     }
@@ -133,7 +163,7 @@
       border-radius: 999px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.08);
-      color: var(--gold-2);
+      color: color-mix(in srgb, var(--fan-accent) 72%, white 28%);
       font-weight: 700;
       letter-spacing: .06em;
       text-transform: uppercase;
@@ -153,8 +183,8 @@
 
     .headline-accent {
       display: block;
-      color: var(--gold);
-      text-shadow: 0 0 24px rgba(246,211,78,.22);
+      color: var(--fan-accent);
+      text-shadow: 0 0 24px var(--fan-accent-soft);
     }
 
     .subcopy {
@@ -182,15 +212,16 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .btn:hover { transform: translateY(-2px); }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--gold), #f4b92f);
+      background: linear-gradient(135deg, var(--fan-accent), color-mix(in srgb, var(--fan-accent) 72%, #f4b92f 28%));
       color: #111;
       border-color: transparent;
-      box-shadow: 0 14px 30px rgba(246,211,78,.25);
+      box-shadow: 0 14px 30px var(--fan-accent-soft);
     }
 
     .btn-secondary {
@@ -244,7 +275,7 @@
       border-radius: 34px;
       background:
         radial-gradient(circle at 70% 20%, rgba(70,181,255,.22), transparent 30%),
-        radial-gradient(circle at 25% 15%, rgba(246,211,78,.2), transparent 28%),
+        radial-gradient(circle at 25% 15%, var(--fan-accent-soft), transparent 28%),
         linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
       border: 1px solid rgba(255,255,255,.1);
       box-shadow: var(--shadow);
@@ -265,7 +296,7 @@
       position: absolute;
       width: 70%;
       aspect-ratio: 1 / 1;
-      border: 2px solid rgba(246,211,78,.18);
+      border: 2px solid var(--fan-accent-soft);
       border-radius: 50%;
       z-index: 0;
       filter: blur(.2px);
@@ -284,7 +315,7 @@
       transform: translateX(-50%);
       width: 70%;
       height: 40px;
-      background: radial-gradient(circle, rgba(246,211,78,.4), transparent 70%);
+      background: radial-gradient(circle, var(--fan-accent-soft), transparent 70%);
       filter: blur(20px);
       z-index: 0;
     }
@@ -303,7 +334,7 @@
     }
 
     .section-kicker {
-      color: var(--gold-2);
+      color: color-mix(in srgb, var(--fan-accent) 72%, white 28%);
       text-transform: uppercase;
       letter-spacing: .1em;
       font-size: .78rem;
@@ -355,9 +386,9 @@
     .quote-panel {
       padding: 28px;
       background:
-        linear-gradient(180deg, rgba(246,211,78,.12), rgba(255,255,255,.04)),
+        linear-gradient(180deg, var(--fan-accent-soft), rgba(255,255,255,.04)),
         rgba(255,255,255,.03);
-      border: 1px solid rgba(246,211,78,.16);
+      border: 1px solid color-mix(in srgb, var(--fan-accent) 22%, transparent);
       border-radius: 28px;
       box-shadow: var(--shadow);
     }
@@ -390,7 +421,7 @@
       width: 4px;
       height: calc(100% - 8px);
       border-radius: 999px;
-      background: linear-gradient(180deg, var(--gold), rgba(70,181,255,.35));
+      background: linear-gradient(180deg, var(--fan-accent), rgba(70,181,255,.35));
       opacity: .85;
     }
 
@@ -419,7 +450,7 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--blue));
+      background: linear-gradient(135deg, var(--fan-accent), var(--blue));
       box-shadow: 0 0 0 5px rgba(255,255,255,.04);
     }
 
@@ -428,7 +459,7 @@
       text-transform: uppercase;
       font-weight: 900;
       letter-spacing: .12em;
-      color: var(--gold-2);
+      color: color-mix(in srgb, var(--fan-accent) 72%, white 28%);
       margin-bottom: 8px;
     }
 
@@ -462,7 +493,7 @@
 
     .stat:hover {
       transform: translateY(-3px);
-      border-color: rgba(246,211,78,.32);
+      border-color: color-mix(in srgb, var(--fan-accent) 50%, transparent);
     }
 
     .stat .big {
@@ -470,7 +501,7 @@
       font-weight: 1000;
       line-height: 1;
       margin-bottom: 10px;
-      color: var(--gold);
+      color: var(--fan-accent);
     }
 
     .stat .label {
@@ -497,13 +528,13 @@
       inset: auto -30% -60% auto;
       width: 120px;
       height: 120px;
-      background: radial-gradient(circle, rgba(246,211,78,.15), transparent 70%);
+      background: radial-gradient(circle, var(--fan-accent-soft), transparent 70%);
       filter: blur(10px);
     }
 
     .legacy-title {
       font-size: 1rem;
-      color: var(--gold-2);
+      color: color-mix(in srgb, var(--fan-accent) 72%, white 28%);
       font-weight: 900;
       letter-spacing: .08em;
       text-transform: uppercase;
@@ -536,7 +567,7 @@
     .time-box .value {
       font-size: clamp(1.7rem, 4vw, 2.8rem);
       font-weight: 1000;
-      color: var(--gold);
+      color: var(--fan-accent);
       line-height: 1;
       margin-bottom: 8px;
     }
@@ -547,6 +578,184 @@
       letter-spacing: .14em;
       color: var(--muted);
       font-weight: 800;
+    }
+
+    .quiz-shell {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, var(--fan-accent-soft), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid color-mix(in srgb, var(--fan-accent) 28%, transparent);
+    }
+
+    .quiz-shell::after {
+      content: "";
+      position: absolute;
+      inset: auto -8% -40% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--fan-accent-soft), transparent 72%);
+      pointer-events: none;
+    }
+
+    .quiz-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .quiz-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .quiz-stage,
+    .quiz-result,
+    .hidden {
+      display: none;
+    }
+
+    .quiz-shell[data-state="question"] .quiz-stage,
+    .quiz-shell[data-state="result"] .quiz-result,
+    .quiz-shell[data-state="intro"] .quiz-intro {
+      display: block;
+    }
+
+    .quiz-progress-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-weight: 800;
+      color: #eef4ff;
+    }
+
+    .quiz-progress-label {
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .78rem;
+      color: color-mix(in srgb, var(--fan-accent) 72%, white 28%);
+    }
+
+    .quiz-progress-bar {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 18px;
+    }
+
+    .quiz-progress-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--fan-accent));
+      box-shadow: 0 0 20px var(--fan-accent-soft);
+      transition: width .28s ease;
+    }
+
+    .quiz-question {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      line-height: 1.2;
+      margin: 0 0 18px;
+      max-width: 32ch;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .quiz-option {
+      width: 100%;
+      padding: 18px 18px;
+      text-align: left;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font: inherit;
+      font-weight: 800;
+      line-height: 1.5;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .quiz-option:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--fan-accent) 55%, transparent);
+      background: rgba(255,255,255,.08);
+    }
+
+    .last-result-line {
+      margin-top: 14px;
+      min-height: 1.4em;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--fan-accent-soft);
+      color: #fff;
+      border: 1px solid color-mix(in srgb, var(--fan-accent) 32%, transparent);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .76rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .result-title {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -.03em;
+      line-height: 1;
+    }
+
+    .result-subtitle {
+      margin: 0 0 18px;
+      font-size: 1.08rem;
+      color: #f2f6fb;
+      font-weight: 800;
+    }
+
+    .result-description {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 60ch;
+    }
+
+    .result-quote {
+      margin: 0 0 22px;
+      padding: 18px 18px 18px 20px;
+      border-left: 4px solid var(--fan-accent);
+      background: rgba(255,255,255,.04);
+      border-radius: 0 18px 18px 0;
+      font-size: 1.1rem;
+      font-weight: 900;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    .share-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .copy-status {
+      min-height: 1.4em;
     }
 
     .rally-grid {
@@ -568,14 +777,14 @@
     .meter-fill {
       width: 18%;
       height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--gold));
-      box-shadow: 0 0 20px rgba(246,211,78,.2);
+      background: linear-gradient(90deg, var(--blue), var(--fan-accent));
+      box-shadow: 0 0 20px var(--fan-accent-soft);
       transition: width .35s ease;
     }
 
     .meter-value {
       font-size: .95rem;
-      color: var(--gold-2);
+      color: color-mix(in srgb, var(--fan-accent) 72%, white 28%);
       font-weight: 800;
       min-height: 1.5em;
     }
@@ -591,7 +800,7 @@
       letter-spacing: -.03em;
       border-radius: 22px;
       margin: 16px 0 14px;
-      background: linear-gradient(180deg, rgba(246,211,78,.12), rgba(70,181,255,.08));
+      background: linear-gradient(180deg, var(--fan-accent-soft), rgba(70,181,255,.08));
       border: 1px solid rgba(255,255,255,.1);
     }
 
@@ -614,7 +823,7 @@
     }
 
     .tab.active {
-      background: linear-gradient(135deg, var(--gold), #f4b92f);
+      background: linear-gradient(135deg, var(--fan-accent), color-mix(in srgb, var(--fan-accent) 72%, #f4b92f 28%));
       color: #111;
       border-color: transparent;
     }
@@ -680,6 +889,7 @@
 
       .stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .legacy-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .quiz-options { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -692,8 +902,10 @@
       .countdown { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .stats,
       .legacy-grid { grid-template-columns: 1fr; }
-      .cta-row { flex-direction: column; align-items: stretch; }
+      .cta-row,
+      .share-actions { flex-direction: column; align-items: stretch; }
       .btn { justify-content: center; }
+      .quiz-progress-row { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
@@ -707,6 +919,7 @@
         <a href="#why">Why He Can Win</a>
         <a href="#legacy">Legacy</a>
         <a href="#countdown">Countdown</a>
+        <a href="#fan-type">Fan Type</a>
         <a href="#rally">Rally</a>
       </nav>
     </div>
@@ -726,7 +939,7 @@
         <div class="cta-row">
           <a class="btn btn-primary" href="#countdown">⚡ Count Down to Title Night</a>
           <a class="btn btn-secondary" href="#gauntlet">🎬 Relive the Gauntlet</a>
-          <a class="btn btn-secondary" href="#rally">🙌 Join the Rally</a>
+          <a class="btn btn-secondary" href="#fan-type">🪪 Find Your Fan Type</a>
         </div>
         <div class="hero-meta">
           <div class="pill">Stand &amp; Deliver • April 4, 2026</div>
@@ -933,8 +1146,60 @@
         <aside class="card">
           <h3 style="margin-top:0;">Fan declaration</h3>
           <p class="small">This page has one completely unbiased opinion:</p>
-          <p class="fan-line">Give Johnny Gargano the stage, the pressure, and the possibility — and he will make the moment matter.</p>
+          <p class="fan-line" id="fanDeclaration">Give Johnny Gargano the stage, the pressure, and the possibility — and he will make the moment matter.</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="section reveal" id="fan-type">
+      <div class="section-kicker">Fan roll call</div>
+      <h2 class="section-title">What kind of Johnny fan are you?</h2>
+      <p class="section-lead">Five quick questions. One fan identity. One result worth sending into the group chat.</p>
+
+      <div class="quiz-shell card" id="quizShell" data-state="intro">
+        <div class="quiz-intro">
+          <div class="quiz-meta">
+            <div class="pill">5 quick questions</div>
+            <div class="pill">Identity-based result</div>
+            <div class="pill">Shareable fan card copy</div>
+          </div>
+          <h3>Settle it: what kind of Johnny Wrestling fan are you really?</h3>
+          <p>
+            This is built for the specific kind of fan who knows Johnny Gargano is not just about moves. It is about heart, comeback energy, legacy, nerves, and the exact kind of belief that survives when things start looking bleak.
+          </p>
+          <p class="small">Take the quiz, get your fan type, then send it to the other Gargano fan in your life.</p>
+          <div class="cta-row" style="margin-top:18px; margin-bottom:12px;">
+            <button class="btn btn-primary" id="startQuizBtn" type="button">⚡ Start the quiz</button>
+          </div>
+          <p class="small last-result-line" id="lastResultLine"></p>
+        </div>
+
+        <div class="quiz-stage" id="quizStage" aria-live="polite">
+          <div class="quiz-progress-row">
+            <div>
+              <div class="quiz-progress-label">Fan type scan in progress</div>
+              <div id="quizProgressCopy">Question 1 of 5</div>
+            </div>
+          </div>
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="quizProgressFill"></div>
+          </div>
+          <h3 class="quiz-question" id="quizQuestion"></h3>
+          <div class="quiz-options" id="quizOptions"></div>
+        </div>
+
+        <div class="quiz-result" id="quizResult" aria-live="polite">
+          <div class="result-badge">Your Johnny fan type</div>
+          <h3 class="result-title" id="resultTitle"></h3>
+          <p class="result-subtitle" id="resultSubtitle"></p>
+          <p class="result-description" id="resultDescription"></p>
+          <blockquote class="result-quote" id="resultQuote"></blockquote>
+          <div class="share-actions">
+            <button class="btn btn-primary" id="copyResultBtn" type="button">Copy result text</button>
+            <button class="btn btn-secondary" id="retakeQuizBtn" type="button">Retake quiz</button>
+          </div>
+          <p class="small copy-status" id="copyStatus"></p>
+        </div>
       </div>
     </section>
 
@@ -1080,6 +1345,291 @@
       });
     }, { rootMargin: '-40% 0px -45% 0px', threshold: 0 });
     sections.forEach(section => navObserver.observe(section));
+
+    const fanTypes = {
+      believer: {
+        title: 'The Believer',
+        subtitle: 'You are here for the heart, the faith, and the chapter where Johnny looks finished but somehow rises anyway.',
+        description: 'You do not need everything to be easy, polished, or inevitable. You stay because Johnny Gargano stories hit deepest when belief has to carry the whole arena before momentum finally catches up.',
+        quote: 'He was down. He was doubted. He still found a way.',
+        shareLine: 'I got “The Believer” on this Johnny Wrestling fan quiz. This site absolutely gets Gargano fans.',
+        declaration: 'You believe the point of a Johnny Gargano story is that faith has to survive before victory does.',
+        chant: 'HEART OVER DOUBT'
+      },
+      historian: {
+        title: 'The #DIY Historian',
+        subtitle: 'You love Johnny not just for tonight, but for the full legacy arc that made him matter in the first place.',
+        description: 'You are wired for continuity, history, and all the emotional weight that comes from knowing where this story sits inside the larger NXT picture. You love the present most when it deepens the legend.',
+        quote: 'Johnny Gargano never really stops fighting, and the fans who love him never really stop believing.',
+        shareLine: 'I got “The #DIY Historian” on this Johnny Wrestling fan quiz. Legacy matters, and this site knows it.',
+        declaration: 'You see this title shot as another chapter in a much bigger Johnny Wrestling history book.',
+        chant: '#DIY FOREVER'
+      },
+      comeback: {
+        title: 'The Comeback Addict',
+        subtitle: 'You do not watch Johnny Gargano for comfort. You watch for near-falls, suffering, panic, and payoff.',
+        description: 'You live for the stretch where everything feels lost, the nerves are shredded, and then the comeback hits anyway. For you, Johnny Wrestling is not just a wrestler — he is emotional cardio.',
+        quote: 'Because when Johnny Gargano rises, it feels earned.',
+        shareLine: 'I got “The Comeback Addict” on this Johnny Wrestling fan quiz. Emotional damage is part of the experience.',
+        declaration: 'You want chaos, drama, and the exact kind of match that leaves your pulse in another dimension.',
+        chant: 'ONE MORE RUN'
+      },
+      prophet: {
+        title: 'The Stand & Deliver Prophet',
+        subtitle: 'You are fully locked in on the title-night destiny of all this. For you, this is not random. This is a sign.',
+        description: 'You are tuned to momentum shifts, big-stage timing, and the feeling that some match opportunities arrive with a glow around them. You are already seeing the title-night reveal in your head.',
+        quote: 'Give Johnny Gargano the stage, the pressure, and the possibility — and he will make the moment matter.',
+        shareLine: 'I got “The Stand & Deliver Prophet” on this Johnny Wrestling fan quiz. The title-night vision is alive.',
+        declaration: 'You are already living in the chapter where the big stage turns this whole comeback into something real.',
+        chant: 'TAKE THAT TITLE HOME'
+      },
+      loyalist: {
+        title: 'The Johnny Never Quits Loyalist',
+        subtitle: 'Grit, underdog energy, and refusal to fold are the core of why Johnny matters to you.',
+        description: 'You love the version of Johnny Gargano who keeps pushing when quitting would be easier. You are attached to the spirit of the thing: the heart, the stubbornness, and the refusal to stop chasing the light.',
+        quote: 'Too small. Too overlooked. Too easy to dismiss. And still he became one of the defining figures in modern NXT history.',
+        shareLine: 'I got “The Johnny Never Quits Loyalist” on this Johnny Wrestling fan quiz. Grit wins me over every time.',
+        declaration: 'You are here because Johnny Gargano never quits on the dream or on the fans who ride with him.',
+        chant: 'JOHNNY WRESTLING 👏👏👏👏👏'
+      }
+    };
+
+    const quizQuestions = [
+      {
+        prompt: 'What pulls you hardest into a Johnny Gargano story?',
+        options: [
+          { label: 'The comeback when he looks finished', score: { believer: 2, comeback: 1 } },
+          { label: 'The history and everything he has already built', score: { historian: 2, loyalist: 1 } },
+          { label: 'The emotion of a match that keeps escalating', score: { comeback: 2, believer: 1 } },
+          { label: 'The sense that one big moment is about to change everything', score: { prophet: 2, believer: 1 } }
+        ]
+      },
+      {
+        prompt: 'What feels most Johnny Wrestling to you?',
+        options: [
+          { label: 'Heart', score: { believer: 2 } },
+          { label: 'Legacy', score: { historian: 2 } },
+          { label: 'Surviving chaos', score: { comeback: 2 } },
+          { label: 'Delivering when the stage is biggest', score: { prophet: 2, loyalist: 1 } }
+        ]
+      },
+      {
+        prompt: 'What kind of match moment destroys your nervous system the fastest?',
+        options: [
+          { label: 'A late comeback', score: { believer: 2, comeback: 1 } },
+          { label: 'A callback to earlier eras', score: { historian: 2 } },
+          { label: 'A 2.9 near fall', score: { comeback: 2 } },
+          { label: 'The setup for the final sequence', score: { prophet: 2 } }
+        ]
+      },
+      {
+        prompt: 'What is your ideal finish on title night?',
+        options: [
+          { label: 'Johnny digs deep and wills himself there', score: { loyalist: 2, believer: 1 } },
+          { label: 'A finish that adds to his legend', score: { historian: 2 } },
+          { label: 'Absolute drama and emotional catharsis', score: { comeback: 2, believer: 1 } },
+          { label: 'One clean signature statement win', score: { prophet: 2, loyalist: 1 } }
+        ]
+      },
+      {
+        prompt: 'Why do you still believe?',
+        options: [
+          { label: 'Because he never quits', score: { loyalist: 2 } },
+          { label: 'Because Johnny matters to NXT history', score: { historian: 2 } },
+          { label: 'Because nobody does suffering-and-payoff like him', score: { comeback: 2 } },
+          { label: 'Because this feels like destiny', score: { prophet: 2, believer: 1 } }
+        ]
+      }
+    ];
+
+    const fanPriority = ['believer', 'comeback', 'prophet', 'loyalist', 'historian'];
+    const quizShell = document.getElementById('quizShell');
+    const startQuizBtn = document.getElementById('startQuizBtn');
+    const quizQuestion = document.getElementById('quizQuestion');
+    const quizOptions = document.getElementById('quizOptions');
+    const quizProgressCopy = document.getElementById('quizProgressCopy');
+    const quizProgressFill = document.getElementById('quizProgressFill');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultSubtitle = document.getElementById('resultSubtitle');
+    const resultDescription = document.getElementById('resultDescription');
+    const resultQuote = document.getElementById('resultQuote');
+    const copyResultBtn = document.getElementById('copyResultBtn');
+    const retakeQuizBtn = document.getElementById('retakeQuizBtn');
+    const copyStatus = document.getElementById('copyStatus');
+    const lastResultLine = document.getElementById('lastResultLine');
+    const fanDeclaration = document.getElementById('fanDeclaration');
+    const storageKey = 'johnny-fan-type-phase-1';
+
+    let questionIndex = 0;
+    let quizScores = freshScores();
+    let currentFanType = null;
+
+    function freshScores() {
+      return {
+        believer: 0,
+        historian: 0,
+        comeback: 0,
+        prophet: 0,
+        loyalist: 0
+      };
+    }
+
+    function setQuizState(state) {
+      quizShell.dataset.state = state;
+    }
+
+    function renderQuestion() {
+      const question = quizQuestions[questionIndex];
+      quizProgressCopy.textContent = `Question ${questionIndex + 1} of ${quizQuestions.length}`;
+      quizProgressFill.style.width = `${((questionIndex + 1) / quizQuestions.length) * 100}%`;
+      quizQuestion.textContent = question.prompt;
+      quizOptions.innerHTML = '';
+
+      question.options.forEach(option => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'quiz-option';
+        button.textContent = option.label;
+        button.addEventListener('click', () => {
+          Object.entries(option.score).forEach(([key, value]) => {
+            quizScores[key] += value;
+          });
+
+          if (questionIndex < quizQuestions.length - 1) {
+            questionIndex += 1;
+            renderQuestion();
+          } else {
+            revealResult(pickWinner());
+          }
+        });
+        quizOptions.appendChild(button);
+      });
+    }
+
+    function pickWinner() {
+      return Object.entries(quizScores)
+        .sort((a, b) => {
+          if (b[1] !== a[1]) return b[1] - a[1];
+          return fanPriority.indexOf(a[0]) - fanPriority.indexOf(b[0]);
+        })[0][0];
+    }
+
+    function applyFanTypeTheme(key) {
+      document.body.dataset.fanType = key;
+      const type = fanTypes[key];
+      if (type) {
+        fanDeclaration.textContent = type.declaration;
+        chantBox.textContent = type.chant;
+        chantIndex = Math.max(0, chants.indexOf(type.chant));
+      }
+    }
+
+    function clearFanTypeTheme() {
+      delete document.body.dataset.fanType;
+      fanDeclaration.textContent = 'Give Johnny Gargano the stage, the pressure, and the possibility — and he will make the moment matter.';
+      chantBox.textContent = chants[0];
+      chantIndex = 0;
+    }
+
+    function saveResult(key) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify({ key, savedAt: Date.now() }));
+      } catch (error) {
+        console.warn('Could not save fan type result', error);
+      }
+    }
+
+    function readSavedResult() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return parsed && parsed.key && fanTypes[parsed.key] ? parsed : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateLastResultLine() {
+      const saved = readSavedResult();
+      if (!saved) {
+        lastResultLine.textContent = 'No fan type saved yet. Take the quiz and claim your side of the Johnny Wrestling psyche.';
+        return;
+      }
+      lastResultLine.textContent = `Last saved fan type: ${fanTypes[saved.key].title}`;
+    }
+
+    function revealResult(key, skipSave = false) {
+      currentFanType = key;
+      const type = fanTypes[key];
+      resultTitle.textContent = type.title;
+      resultSubtitle.textContent = type.subtitle;
+      resultDescription.textContent = type.description;
+      resultQuote.textContent = `“${type.quote}”`;
+      setQuizState('result');
+      applyFanTypeTheme(key);
+      copyStatus.textContent = 'Copy your result text and send it to the Johnny fan in your life.';
+      history.replaceState({}, '', `${location.pathname}?fan=${key}`);
+      if (!skipSave) saveResult(key);
+      updateLastResultLine();
+    }
+
+    function resetQuiz() {
+      questionIndex = 0;
+      quizScores = freshScores();
+      currentFanType = null;
+      copyStatus.textContent = '';
+      history.replaceState({}, '', location.pathname);
+      clearFanTypeTheme();
+      setQuizState('intro');
+      updateLastResultLine();
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      temp.remove();
+    }
+
+    startQuizBtn.addEventListener('click', () => {
+      questionIndex = 0;
+      quizScores = freshScores();
+      copyStatus.textContent = '';
+      setQuizState('question');
+      renderQuestion();
+    });
+
+    retakeQuizBtn.addEventListener('click', resetQuiz);
+
+    copyResultBtn.addEventListener('click', async () => {
+      if (!currentFanType) return;
+      const type = fanTypes[currentFanType];
+      const shareUrl = `${location.origin}${location.pathname}?fan=${currentFanType}`;
+      const shareText = `${type.shareLine}\n\nI got ${type.title} on the Johnny Wrestling fan quiz.\nTake the quiz: ${shareUrl}`;
+
+      try {
+        await copyText(shareText);
+        copyStatus.textContent = 'Copied. Time to send it into the group chat.';
+      } catch (error) {
+        copyStatus.textContent = 'Copy failed on this device. You can still manually share the URL in your address bar.';
+      }
+    });
+
+    updateLastResultLine();
+
+    const params = new URLSearchParams(window.location.search);
+    const sharedFanType = params.get('fan');
+    if (sharedFanType && fanTypes[sharedFanType]) {
+      revealResult(sharedFanType, true);
+      copyStatus.textContent = 'A fan shared this result with you. Retake the quiz to see what you get.';
+    }
   </script>
 </body>
 </html>
