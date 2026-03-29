@@ -1,0 +1,45 @@
+:root {
+  --bg: #09090b;
+  --bg-soft: #111217;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel-strong: rgba(255, 255, 255, 0.1);
+  --text: #f8fafc;
+  --muted: #b3bdd0;
+  --gold: #f6d34e;
+  --gold-2: #ffea96;
+  --blue: #46b5ff;
+  --red: #ff5d5d;
+  --violet: #9e7bff;
+  --emerald: #6df3b2;
+  --orange: #ff9d66;
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  --radius: 24px;
+  --max: 1200px;
+  --fan-accent: var(--gold);
+  --fan-accent-soft: rgba(246, 211, 78, 0.16);
+}
+
+body[data-fan-type="believer"] {
+  --fan-accent: var(--gold);
+  --fan-accent-soft: rgba(246, 211, 78, 0.18);
+}
+
+body[data-fan-type="historian"] {
+  --fan-accent: var(--blue);
+  --fan-accent-soft: rgba(70, 181, 255, 0.18);
+}
+
+body[data-fan-type="comeback"] {
+  --fan-accent: var(--orange);
+  --fan-accent-soft: rgba(255, 157, 102, 0.18);
+}
+
+body[data-fan-type="prophet"] {
+  --fan-accent: var(--emerald);
+  --fan-accent-soft: rgba(109, 243, 178, 0.18);
+}
+
+body[data-fan-type="loyalist"] {
+  --fan-accent: var(--violet);
+  --fan-accent-soft: rgba(158, 123, 255, 0.18);
+}
