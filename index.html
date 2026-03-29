@@ -208,14 +208,16 @@
       border: 1px solid rgba(255,255,255,.12);
       font-weight: 800;
       letter-spacing: .02em;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, opacity .18s ease;
       display: inline-flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      font: inherit;
     }
 
     .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--fan-accent), color-mix(in srgb, var(--fan-accent) 72%, #f4b92f 28%));
@@ -587,6 +589,7 @@
         radial-gradient(circle at top right, var(--fan-accent-soft), transparent 32%),
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       border: 1px solid color-mix(in srgb, var(--fan-accent) 28%, transparent);
+      isolation: isolate;
     }
 
     .quiz-shell::after {
@@ -598,6 +601,29 @@
       border-radius: 50%;
       background: radial-gradient(circle, var(--fan-accent-soft), transparent 72%);
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .quiz-shell::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at center, var(--fan-accent-soft), transparent 35%);
+      opacity: 0;
+      transform: scale(.75);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .quiz-shell.result-reveal::before {
+      animation: arenaPulse 1.15s ease forwards;
+    }
+
+    @keyframes arenaPulse {
+      0% { opacity: 0; transform: scale(.75); }
+      28% { opacity: .9; }
+      100% { opacity: 0; transform: scale(1.35); }
     }
 
     .quiz-shell > * {
@@ -613,12 +639,13 @@
     }
 
     .quiz-stage,
-    .quiz-result,
-    .hidden {
+    .quiz-loading,
+    .quiz-result {
       display: none;
     }
 
     .quiz-shell[data-state="question"] .quiz-stage,
+    .quiz-shell[data-state="loading"] .quiz-loading,
     .quiz-shell[data-state="result"] .quiz-result,
     .quiz-shell[data-state="intro"] .quiz-intro {
       display: block;
@@ -693,9 +720,51 @@
       background: rgba(255,255,255,.08);
     }
 
-    .last-result-line {
-      margin-top: 14px;
+    .quiz-loading {
+      text-align: center;
+      padding: 22px 0 6px;
+    }
+
+    .loading-ring {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      border: 3px solid rgba(255,255,255,.08);
+      border-top-color: var(--fan-accent);
+      animation: spin 1s linear infinite;
+      box-shadow: 0 0 30px var(--fan-accent-soft);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-title {
+      margin: 0 0 10px;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 950;
+      letter-spacing: -.03em;
+    }
+
+    .loading-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 44ch;
+      margin-inline: auto;
+    }
+
+    .last-result-line,
+    .unlock-note,
+    .copy-status {
       min-height: 1.4em;
+    }
+
+    .unlock-note {
+      margin-top: 12px;
+      color: #eef4ff;
+      font-weight: 800;
     }
 
     .result-badge {
@@ -747,6 +816,27 @@
       color: #fff;
     }
 
+    .result-card-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top right, var(--fan-accent-soft), transparent 36%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid color-mix(in srgb, var(--fan-accent) 24%, transparent);
+    }
+
+    .quiz-shell.result-reveal .result-card-panel {
+      animation: popCard .8s cubic-bezier(.17,.84,.44,1) both;
+    }
+
+    @keyframes popCard {
+      0% { opacity: 0; transform: scale(.94) translateY(16px); }
+      55% { opacity: 1; transform: scale(1.02) translateY(0); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
     .share-actions {
       display: flex;
       gap: 12px;
@@ -754,8 +844,12 @@
       margin-bottom: 12px;
     }
 
-    .copy-status {
-      min-height: 1.4em;
+    .share-preview {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: .95rem;
+      white-space: pre-line;
     }
 
     .rally-grid {
@@ -820,6 +914,7 @@
       border-radius: 999px;
       padding: 11px 14px;
       font-weight: 800;
+      font: inherit;
     }
 
     .tab.active {
@@ -1161,7 +1256,7 @@
           <div class="quiz-meta">
             <div class="pill">5 quick questions</div>
             <div class="pill">Identity-based result</div>
-            <div class="pill">Shareable fan card copy</div>
+            <div class="pill">Shareable fan card</div>
           </div>
           <h3>Settle it: what kind of Johnny Wrestling fan are you really?</h3>
           <p>
@@ -1172,6 +1267,7 @@
             <button class="btn btn-primary" id="startQuizBtn" type="button">⚡ Start the quiz</button>
           </div>
           <p class="small last-result-line" id="lastResultLine"></p>
+          <p class="small unlock-note" id="unlockNote"></p>
         </div>
 
         <div class="quiz-stage" id="quizStage" aria-live="polite">
@@ -1188,17 +1284,31 @@
           <div class="quiz-options" id="quizOptions"></div>
         </div>
 
+        <div class="quiz-loading" id="quizLoading" aria-live="polite">
+          <div class="loading-ring" aria-hidden="true"></div>
+          <h3 class="loading-title">Scanning the arena…</h3>
+          <p class="loading-copy">Checking your panic threshold, comeback tolerance, legacy instincts, and Johnny Wrestling faith level.</p>
+        </div>
+
         <div class="quiz-result" id="quizResult" aria-live="polite">
-          <div class="result-badge">Your Johnny fan type</div>
-          <h3 class="result-title" id="resultTitle"></h3>
-          <p class="result-subtitle" id="resultSubtitle"></p>
-          <p class="result-description" id="resultDescription"></p>
-          <blockquote class="result-quote" id="resultQuote"></blockquote>
-          <div class="share-actions">
-            <button class="btn btn-primary" id="copyResultBtn" type="button">Copy result text</button>
-            <button class="btn btn-secondary" id="retakeQuizBtn" type="button">Retake quiz</button>
+          <div class="result-card-panel">
+            <div class="result-badge">Your Johnny fan type</div>
+            <h3 class="result-title" id="resultTitle"></h3>
+            <p class="result-subtitle" id="resultSubtitle"></p>
+            <p class="result-description" id="resultDescription"></p>
+            <blockquote class="result-quote" id="resultQuote"></blockquote>
+
+            <div class="share-actions">
+              <button class="btn btn-primary" id="nativeShareBtn" type="button">Share result</button>
+              <button class="btn btn-secondary" id="copyResultBtn" type="button">Copy result text</button>
+              <button class="btn btn-secondary" id="copyLinkBtn" type="button">Copy link</button>
+              <button class="btn btn-secondary" id="downloadCardBtn" type="button">Download fan card</button>
+              <button class="btn btn-secondary" id="retakeQuizBtn" type="button">Retake quiz</button>
+            </div>
+
+            <p class="small copy-status" id="copyStatus"></p>
+            <div class="share-preview" id="sharePreview"></div>
           </div>
-          <p class="small copy-status" id="copyStatus"></p>
         </div>
       </div>
     </section>
@@ -1220,6 +1330,7 @@
           <p class="small">Rotate through fan chants until you find the one that belongs in the arena.</p>
           <div class="chant-box" id="chantBox">JOHNNY WRESTLING 👏👏👏👏👏</div>
           <button class="btn btn-secondary" id="chantBtn" type="button">Next Chant</button>
+          <p class="small" id="secretChantLine" style="margin-top:12px;"></p>
         </article>
 
         <article class="card">
@@ -1313,12 +1424,31 @@
       'HEART OVER DOUBT',
       'NXT STILL BELONGS TO JOHNNY'
     ];
+    const secretChant = 'THIS IS JOHNNY’S HOUSE';
     const chantBox = document.getElementById('chantBox');
     const chantBtn = document.getElementById('chantBtn');
+    const secretChantLine = document.getElementById('secretChantLine');
     let chantIndex = 0;
+    let secretChantUnlocked = false;
+
+    function getAvailableChants() {
+      return secretChantUnlocked ? [...chants, secretChant] : chants;
+    }
+
+    function syncSecretChantUI() {
+      secretChantLine.textContent = secretChantUnlocked
+        ? `Secret chant unlocked: ${secretChant}`
+        : '';
+      if (!secretChantUnlocked && chantBox.textContent === secretChant) {
+        chantBox.textContent = chants[0];
+        chantIndex = 0;
+      }
+    }
+
     chantBtn.addEventListener('click', () => {
-      chantIndex = (chantIndex + 1) % chants.length;
-      chantBox.textContent = chants[chantIndex];
+      const available = getAvailableChants();
+      chantIndex = (chantIndex + 1) % available.length;
+      chantBox.textContent = available[chantIndex];
     });
 
     const moveCopy = document.getElementById('moveCopy');
@@ -1443,6 +1573,7 @@
     ];
 
     const fanPriority = ['believer', 'comeback', 'prophet', 'loyalist', 'historian'];
+
     const quizShell = document.getElementById('quizShell');
     const startQuizBtn = document.getElementById('startQuizBtn');
     const quizQuestion = document.getElementById('quizQuestion');
@@ -1453,16 +1584,24 @@
     const resultSubtitle = document.getElementById('resultSubtitle');
     const resultDescription = document.getElementById('resultDescription');
     const resultQuote = document.getElementById('resultQuote');
+    const nativeShareBtn = document.getElementById('nativeShareBtn');
     const copyResultBtn = document.getElementById('copyResultBtn');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const downloadCardBtn = document.getElementById('downloadCardBtn');
     const retakeQuizBtn = document.getElementById('retakeQuizBtn');
     const copyStatus = document.getElementById('copyStatus');
     const lastResultLine = document.getElementById('lastResultLine');
+    const unlockNote = document.getElementById('unlockNote');
+    const sharePreview = document.getElementById('sharePreview');
     const fanDeclaration = document.getElementById('fanDeclaration');
-    const storageKey = 'johnny-fan-type-phase-1';
+
+    const storageKey = 'johnny-fan-type-phase-3';
+    const legacyStorageKeys = ['johnny-fan-type-phase-1', 'johnny-fan-type-phase-2'];
 
     let questionIndex = 0;
     let quizScores = freshScores();
     let currentFanType = null;
+    let completionCount = 0;
 
     function freshScores() {
       return {
@@ -1476,6 +1615,13 @@
 
     function setQuizState(state) {
       quizShell.dataset.state = state;
+    }
+
+    function triggerResultReveal() {
+      quizShell.classList.remove('result-reveal');
+      void quizShell.offsetWidth;
+      quizShell.classList.add('result-reveal');
+      window.setTimeout(() => quizShell.classList.remove('result-reveal'), 1300);
     }
 
     function renderQuestion() {
@@ -1499,7 +1645,10 @@
             questionIndex += 1;
             renderQuestion();
           } else {
-            revealResult(pickWinner());
+            setQuizState('loading');
+            window.setTimeout(() => {
+              revealResult(pickWinner());
+            }, 900);
           }
         });
         quizOptions.appendChild(button);
@@ -1519,8 +1668,10 @@
       const type = fanTypes[key];
       if (type) {
         fanDeclaration.textContent = type.declaration;
-        chantBox.textContent = type.chant;
-        chantIndex = Math.max(0, chants.indexOf(type.chant));
+        const available = getAvailableChants();
+        const nextChant = available.includes(type.chant) ? type.chant : available[0];
+        chantBox.textContent = nextChant;
+        chantIndex = Math.max(0, available.indexOf(nextChant));
       }
     }
 
@@ -1531,32 +1682,99 @@
       chantIndex = 0;
     }
 
-    function saveResult(key) {
-      try {
-        localStorage.setItem(storageKey, JSON.stringify({ key, savedAt: Date.now() }));
-      } catch (error) {
-        console.warn('Could not save fan type result', error);
-      }
+    function normalizeSavedData(data) {
+      if (!data || !data.key || !fanTypes[data.key]) return null;
+      return {
+        key: data.key,
+        savedAt: data.savedAt || Date.now(),
+        completions: Number(data.completions || 0),
+        secretChantUnlocked: Boolean(data.secretChantUnlocked || Number(data.completions || 0) >= 2)
+      };
     }
 
-    function readSavedResult() {
+    function readSavedState() {
       try {
-        const raw = localStorage.getItem(storageKey);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        return parsed && parsed.key && fanTypes[parsed.key] ? parsed : null;
+        const currentRaw = localStorage.getItem(storageKey);
+        if (currentRaw) {
+          return normalizeSavedData(JSON.parse(currentRaw));
+        }
+
+        for (const key of legacyStorageKeys) {
+          const raw = localStorage.getItem(key);
+          if (!raw) continue;
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.key && fanTypes[parsed.key]) {
+            return normalizeSavedData({
+              key: parsed.key,
+              savedAt: parsed.savedAt || Date.now(),
+              completions: parsed.completions || 1,
+              secretChantUnlocked: parsed.secretChantUnlocked || false
+            });
+          }
+        }
       } catch (error) {
         return null;
       }
+      return null;
+    }
+
+    function saveState(key) {
+      completionCount += 1;
+      secretChantUnlocked = completionCount >= 2;
+      const payload = {
+        key,
+        savedAt: Date.now(),
+        completions: completionCount,
+        secretChantUnlocked
+      };
+
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(payload));
+      } catch (error) {
+        console.warn('Could not save fan type state', error);
+      }
+      syncSecretChantUI();
+      updateLastResultLine();
     }
 
     function updateLastResultLine() {
-      const saved = readSavedResult();
+      const saved = readSavedState();
       if (!saved) {
         lastResultLine.textContent = 'No fan type saved yet. Take the quiz and claim your side of the Johnny Wrestling psyche.';
+        unlockNote.textContent = '';
         return;
       }
+
+      completionCount = Number(saved.completions || 0);
+      secretChantUnlocked = Boolean(saved.secretChantUnlocked || completionCount >= 2);
       lastResultLine.textContent = `Last saved fan type: ${fanTypes[saved.key].title}`;
+      unlockNote.textContent = secretChantUnlocked
+        ? `Repeat-fan bonus unlocked: secret crowd chant enabled.`
+        : `Take the quiz twice total to unlock a secret crowd chant.`;
+      syncSecretChantUI();
+    }
+
+    function getShareUrl(key = currentFanType) {
+      return `${location.origin}${location.pathname}?fan=${key}`;
+    }
+
+    function getShareText(key = currentFanType) {
+      const type = fanTypes[key];
+      const url = getShareUrl(key);
+      return `${type.shareLine}
+
+My chant: ${type.chant}
+Quote: "${type.quote}"
+
+Take the quiz: ${url}`;
+    }
+
+    function updateSharePreview(key = currentFanType) {
+      if (!key) {
+        sharePreview.textContent = '';
+        return;
+      }
+      sharePreview.textContent = getShareText(key);
     }
 
     function revealResult(key, skipSave = false) {
@@ -1568,10 +1786,17 @@
       resultQuote.textContent = `“${type.quote}”`;
       setQuizState('result');
       applyFanTypeTheme(key);
-      copyStatus.textContent = 'Copy your result text and send it to the Johnny fan in your life.';
+      triggerResultReveal();
+      updateSharePreview(key);
+      copyStatus.textContent = 'This result is ready to share.';
       history.replaceState({}, '', `${location.pathname}?fan=${key}`);
-      if (!skipSave) saveResult(key);
-      updateLastResultLine();
+      document.title = `${type.title} | Johnny Wrestling Fan Type`;
+
+      if (!skipSave) {
+        saveState(key);
+      } else {
+        syncSecretChantUI();
+      }
     }
 
     function resetQuiz() {
@@ -1579,7 +1804,9 @@
       quizScores = freshScores();
       currentFanType = null;
       copyStatus.textContent = '';
+      sharePreview.textContent = '';
       history.replaceState({}, '', location.pathname);
+      document.title = 'Johnny Wrestling | One More Run';
       clearFanTypeTheme();
       setQuizState('intro');
       updateLastResultLine();
@@ -1598,37 +1825,187 @@
       temp.remove();
     }
 
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      let cursorY = y;
+
+      for (let i = 0; i < words.length; i += 1) {
+        const testLine = line + words[i] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && i > 0) {
+          ctx.fillText(line.trim(), x, cursorY);
+          line = words[i] + ' ';
+          cursorY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+
+      if (line) {
+        ctx.fillText(line.trim(), x, cursorY);
+      }
+
+      return cursorY;
+    }
+
+    function downloadFanCard() {
+      if (!currentFanType) return;
+      const type = fanTypes[currentFanType];
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1350;
+      const ctx = canvas.getContext('2d');
+
+      const root = getComputedStyle(document.body);
+      const accent = root.getPropertyValue('--fan-accent').trim() || '#f6d34e';
+
+      const gradient = ctx.createLinearGradient(0, 0, 1080, 1350);
+      gradient.addColorStop(0, '#070709');
+      gradient.addColorStop(.55, '#0d1017');
+      gradient.addColorStop(1, '#12151d');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const glow = ctx.createRadialGradient(850, 180, 10, 850, 180, 420);
+      glow.addColorStop(0, accent + '55');
+      glow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(54, 54, canvas.width - 108, canvas.height - 108);
+
+      ctx.fillStyle = accent;
+      ctx.font = '800 34px Inter, Arial, sans-serif';
+      ctx.fillText('JOHNNY WRESTLING FAN TYPE', 90, 130);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '900 88px Inter, Arial, sans-serif';
+      wrapText(ctx, type.title.toUpperCase(), 90, 255, 900, 92);
+
+      ctx.fillStyle = '#d9e2f1';
+      ctx.font = '700 34px Inter, Arial, sans-serif';
+      const subY = wrapText(ctx, type.subtitle, 90, 395, 900, 48);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.08)';
+      ctx.fillRect(90, subY + 55, 900, 2);
+
+      ctx.fillStyle = '#b8c2d6';
+      ctx.font = '500 34px Inter, Arial, sans-serif';
+      const descY = wrapText(ctx, type.description, 90, subY + 130, 900, 48);
+
+      ctx.fillStyle = accent;
+      ctx.fillRect(90, descY + 55, 8, 190);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 46px Inter, Arial, sans-serif';
+      wrapText(ctx, `“${type.quote}”`, 125, descY + 120, 830, 60);
+
+      ctx.fillStyle = accent;
+      ctx.font = '800 36px Inter, Arial, sans-serif';
+      ctx.fillText(`CHANT: ${type.chant}`, 90, 1120);
+
+      ctx.fillStyle = '#dce5f5';
+      ctx.font = '700 28px Inter, Arial, sans-serif';
+      ctx.fillText('Take the quiz at your Johnny Wrestling fan page', 90, 1185);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.65)';
+      ctx.font = '600 24px Inter, Arial, sans-serif';
+      ctx.fillText(location.origin + location.pathname, 90, 1240);
+
+      const link = document.createElement('a');
+      link.download = `${type.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-fan-card.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
     startQuizBtn.addEventListener('click', () => {
       questionIndex = 0;
       quizScores = freshScores();
       copyStatus.textContent = '';
+      sharePreview.textContent = '';
       setQuizState('question');
       renderQuestion();
     });
 
     retakeQuizBtn.addEventListener('click', resetQuiz);
 
-    copyResultBtn.addEventListener('click', async () => {
+    nativeShareBtn.addEventListener('click', async () => {
       if (!currentFanType) return;
       const type = fanTypes[currentFanType];
-      const shareUrl = `${location.origin}${location.pathname}?fan=${currentFanType}`;
-      const shareText = `${type.shareLine}\n\nI got ${type.title} on the Johnny Wrestling fan quiz.\nTake the quiz: ${shareUrl}`;
+      const url = getShareUrl();
+      const text = `${type.shareLine}\n\nTake the quiz: ${url}`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: `${type.title} | Johnny Wrestling Fan Type`,
+            text,
+            url
+          });
+          copyStatus.textContent = 'Shared. Time to start a Gargano fan argument.';
+          return;
+        } catch (error) {
+          if (error && error.name === 'AbortError') return;
+        }
+      }
 
       try {
-        await copyText(shareText);
+        await copyText(getShareText());
+        copyStatus.textContent = 'Native share is not available here, so the full result text was copied instead.';
+      } catch (error) {
+        copyStatus.textContent = 'Share failed on this device.';
+      }
+    });
+
+    copyResultBtn.addEventListener('click', async () => {
+      if (!currentFanType) return;
+      try {
+        await copyText(getShareText());
         copyStatus.textContent = 'Copied. Time to send it into the group chat.';
       } catch (error) {
         copyStatus.textContent = 'Copy failed on this device. You can still manually share the URL in your address bar.';
       }
     });
 
+    copyLinkBtn.addEventListener('click', async () => {
+      if (!currentFanType) return;
+      try {
+        await copyText(getShareUrl());
+        copyStatus.textContent = 'Link copied.';
+      } catch (error) {
+        copyStatus.textContent = 'Could not copy the link on this device.';
+      }
+    });
+
+    downloadCardBtn.addEventListener('click', () => {
+      if (!currentFanType) return;
+      downloadFanCard();
+      copyStatus.textContent = 'Fan card downloaded.';
+    });
+
+    function initializeShareButton() {
+      nativeShareBtn.textContent = navigator.share ? 'Share result' : 'Quick share';
+    }
+
     updateLastResultLine();
+    initializeShareButton();
 
     const params = new URLSearchParams(window.location.search);
     const sharedFanType = params.get('fan');
+
     if (sharedFanType && fanTypes[sharedFanType]) {
       revealResult(sharedFanType, true);
       copyStatus.textContent = 'A fan shared this result with you. Retake the quiz to see what you get.';
+    } else {
+      const saved = readSavedState();
+      if (saved) {
+        completionCount = Number(saved.completions || 0);
+        secretChantUnlocked = Boolean(saved.secretChantUnlocked || completionCount >= 2);
+        syncSecretChantUI();
+      }
     }
   </script>
 </body>
