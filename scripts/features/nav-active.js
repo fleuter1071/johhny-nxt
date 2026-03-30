@@ -1,5 +1,5 @@
 export function initActiveNav() {
-  const navLinks = document.querySelectorAll(".nav a");
+  const navLinks = document.querySelectorAll(".nav a, .mobile-nav a");
   const sections = [...document.querySelectorAll("section[id]")];
   if (!navLinks.length || !sections.length || !("IntersectionObserver" in window)) {
     return;

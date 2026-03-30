@@ -25,6 +25,11 @@
         <a href="#fan-type">Fan Lab</a>
       </nav>
     </div>
+    <nav class="mobile-nav" aria-label="Mobile section navigation">
+      <a href="#moment">Story</a>
+      <a href="#opponent">Match</a>
+      <a href="#fan-type">Fan Lab</a>
+    </nav>
   </header>
 
   <main class="wrap">
@@ -44,8 +49,14 @@
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#countdown">⚡ Count Down to Title Night</a>
-          <a class="btn btn-secondary" href="#gauntlet">🎬 Relive the Gauntlet</a>
           <a class="btn btn-secondary" href="#fan-type">🪪 Find Your Fan Type</a>
+          <a class="btn btn-tertiary" href="#gauntlet">🎬 Relive the Gauntlet</a>
+        </div>
+        <div class="hero-match-card" aria-label="Match details">
+          <div class="hero-match-label">Stand &amp; Deliver</div>
+          <div class="hero-match-line">April 4, 2026</div>
+          <div class="hero-match-line">Johnny Gargano vs. Myles Borne</div>
+          <div class="hero-match-note">NXT North American Championship</div>
         </div>
         <div class="hero-meta">
           <div class="pill">Stand &amp; Deliver • April 4, 2026</div>
@@ -212,7 +223,7 @@
       </div>
     </section>
 
-    <section class="section reveal" id="countdown">
+    <section class="section reveal section-featured" id="countdown">
       <div class="section-kicker">Until title night</div>
       <h2 class="section-title">Stand &amp; Deliver countdown</h2>
       <div class="countdown-wrap">
@@ -232,7 +243,7 @@
       </div>
     </section>
 
-    <section class="section reveal" id="fan-type">
+    <section class="section reveal section-featured section-fanlab" id="fan-type">
       <div class="section-kicker">Fan lab</div>
       <h2 class="section-title">Pick your lane in Johnny's title-night chaos</h2>
       <p class="section-lead">This is the payoff zone: take the fan-type quiz, book your ideal finish, and push the rally energy higher.</p>
@@ -279,12 +290,18 @@
             <p class="result-subtitle" id="resultSubtitle"></p>
             <p class="result-description" id="resultDescription"></p>
             <blockquote class="result-quote" id="resultQuote"></blockquote>
-            <div class="share-actions">
-              <button class="btn btn-primary" id="nativeShareBtn" type="button">Share result</button>
-              <button class="btn btn-secondary" id="copyResultBtn" type="button">Copy result text</button>
-              <button class="btn btn-secondary" id="copyLinkBtn" type="button">Copy link</button>
-              <button class="btn btn-secondary" id="downloadCardBtn" type="button">Download fan card</button>
-              <button class="btn btn-secondary" id="retakeQuizBtn" type="button">Retake quiz</button>
+            <div class="result-actions">
+              <div class="share-actions share-actions-primary">
+                <button class="btn btn-primary" id="nativeShareBtn" type="button">Share result</button>
+              </div>
+              <div class="share-actions share-actions-secondary">
+                <button class="btn btn-secondary" id="copyResultBtn" type="button">Copy result text</button>
+                <button class="btn btn-secondary" id="downloadCardBtn" type="button">Download fan card</button>
+              </div>
+              <div class="share-actions share-actions-tertiary">
+                <button class="btn btn-secondary btn-quiet" id="copyLinkBtn" type="button">Copy link</button>
+                <button class="btn btn-secondary btn-quiet" id="retakeQuizBtn" type="button">Retake quiz</button>
+              </div>
             </div>
             <p class="small copy-status" id="copyStatus"></p>
             <div class="share-preview" id="sharePreview"></div>
@@ -338,12 +355,18 @@
             <p class="result-subtitle" id="bfResultSubtitle"></p>
             <p class="result-description" id="bfResultSummary"></p>
             <div class="bf-tag-grid" id="bfResultTags"></div>
-            <div class="share-actions top-gap">
-              <button class="btn btn-primary" id="bfShareBtn" type="button">Share finish</button>
-              <button class="btn btn-secondary" id="bfCopyTextBtn" type="button">Copy result text</button>
-              <button class="btn btn-secondary" id="bfCopyLinkBtn" type="button">Copy link</button>
-              <button class="btn btn-secondary" id="bfDownloadBtn" type="button">Download card</button>
-              <button class="btn btn-secondary" id="bfRetakeBtn" type="button">Book another finish</button>
+            <div class="result-actions top-gap">
+              <div class="share-actions share-actions-primary">
+                <button class="btn btn-primary" id="bfShareBtn" type="button">Share finish</button>
+              </div>
+              <div class="share-actions share-actions-secondary">
+                <button class="btn btn-secondary" id="bfCopyTextBtn" type="button">Copy result text</button>
+                <button class="btn btn-secondary" id="bfDownloadBtn" type="button">Download card</button>
+              </div>
+              <div class="share-actions share-actions-tertiary">
+                <button class="btn btn-secondary btn-quiet" id="bfCopyLinkBtn" type="button">Copy link</button>
+                <button class="btn btn-secondary btn-quiet" id="bfRetakeBtn" type="button">Book another finish</button>
+              </div>
             </div>
             <p class="small copy-status" id="bfStatus"></p>
             <div class="bf-share-preview" id="bfSharePreview"></div>
