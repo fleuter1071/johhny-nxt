@@ -4,6 +4,10 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 section[id] {
@@ -12,13 +16,17 @@ section[id] {
 
 body {
   margin: 0;
+  width: 100%;
+  max-width: 100%;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:
     radial-gradient(circle at 20% 0%, rgba(70, 181, 255, 0.16), transparent 32%),
     radial-gradient(circle at 80% 0%, rgba(246, 211, 78, 0.18), transparent 30%),
     linear-gradient(180deg, #050507 0%, #09090b 20%, #0c0d12 100%);
   color: var(--text);
-  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
 }
 
 body::before {
@@ -110,6 +118,7 @@ select {
   max-width: var(--max);
   margin: 0 auto;
   padding: 0 20px 70px;
+  overflow-x: clip;
 }
 
 .hero {
@@ -364,12 +373,13 @@ h1 {
   position: relative;
   margin-top: 18px;
   padding: 60px 0;
+  overflow: clip;
 }
 
 .section-featured::before {
   content: "";
   position: absolute;
-  inset: 12px -18px;
+  inset: 12px 0;
   border-radius: 34px;
   background:
     radial-gradient(circle at top right, var(--fan-accent-soft), transparent 38%),
@@ -505,6 +515,14 @@ h1 {
   gap: 18px;
 }
 
+.opponent-hero {
+  margin: 0 0 22px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, var(--fan-accent-soft), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+}
+
 .opponent-story,
 .opponent-photo-card,
 .match-poster {
@@ -583,8 +601,8 @@ h1 {
 }
 
 .match-poster img {
-  margin: 0 -24px 18px;
-  width: calc(100% + 48px);
+  margin: 0 0 18px;
+  width: 100%;
   aspect-ratio: 16 / 9;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -998,7 +1016,7 @@ h1 {
   }
 
   .section-featured::before {
-    inset: 8px -8px;
+    inset: 8px 0;
     border-radius: 28px;
   }
 
@@ -1007,11 +1025,15 @@ h1 {
     right: 6px;
   }
 
+  .opponent-hero {
+    margin-bottom: 18px;
+  }
+
   .opponent-photo-frame,
   .match-poster img {
-    margin-left: -12px;
-    margin-right: -12px;
-    width: calc(100% + 24px);
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
   }
 
   .opponent-photo-frame {
