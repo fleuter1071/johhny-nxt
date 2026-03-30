@@ -365,6 +365,12 @@
   gap: 18px;
 }
 
+@media (max-width: 1180px) {
+  .rally-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .meter-shell {
   width: 100%;
   height: 18px;
