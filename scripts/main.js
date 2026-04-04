@@ -7,6 +7,7 @@ import { initMoveSpotlight } from "./features/move-spotlight.js";
 import { initMatchLab } from "./features/match-lab.js";
 import { initActiveNav } from "./features/nav-active.js";
 import { initReveal } from "./features/reveal.js";
+import { initThemeAudio } from "./features/theme-audio.js";
 
 initReveal();
 initCountdown();
@@ -14,6 +15,7 @@ initBeliefMeter();
 initMoveSpotlight();
 initMatchLab();
 initActiveNav();
+initThemeAudio();
 
 const chantController = initChantGenerator();
 initFanTypeQuiz({ chantController });

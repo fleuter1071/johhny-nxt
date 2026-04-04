@@ -34,6 +34,29 @@
     </nav>
   </header>
 
+  <div class="theme-audio-bar" aria-live="polite">
+    <button
+      class="theme-audio-toggle"
+      id="themeAudioToggle"
+      type="button"
+      aria-pressed="true"
+      aria-describedby="themeAudioStatus"
+    >
+      <span class="theme-audio-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="theme-audio-copy">
+        <span class="theme-audio-label">Johnny Theme</span>
+        <span class="theme-audio-status" id="themeAudioStatus">Theme: On</span>
+      </span>
+    </button>
+    <audio id="themeAudio" preload="auto" playsinline>
+      <source src="assets/audio/rebel-heart.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
   <main class="wrap">
     <section class="hero" id="top">
       <div class="hero-copy reveal visible">
